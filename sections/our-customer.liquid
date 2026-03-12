@@ -1,0 +1,146 @@
+<section class="our-customer-section" 
+  style="{% if section.settings.bg_image != blank %}background-image: url({{ section.settings.bg_image | image_url }});{% endif %}">
+
+  <div class="our-customer-overlay"></div>
+
+  <div class="page-width our-customer-wrapper">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="our-customer-heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    <div class="our-customer-grid">
+      {% for block in section.blocks %}
+        <div class="our-customer-card">
+
+          {% if block.settings.image != blank or block.settings.mobile_image != blank %}
+            <div class="customer-image">
+              <picture>
+
+                {% if block.settings.mobile_image != blank %}
+                  <source 
+                    media="(max-width: 767px)" 
+                    srcset="{{ block.settings.mobile_image | image_url }}">
+                {% endif %}
+
+                {% if block.settings.image != blank %}
+                  <img 
+                    src="{{ block.settings.image | image_url }}"
+                    alt="{{ block.settings.name | escape }}"
+                    loading="lazy">
+                {% elsif block.settings.mobile_image != blank %}
+                  <img 
+                    src="{{ block.settings.mobile_image | image_url }}"
+                    alt="{{ block.settings.name | escape }}"
+                    loading="lazy">
+                {% endif %}
+
+              </picture>
+            </div>
+          {% endif %}
+
+          <div class="customer-quote-box">
+            
+            {% if block.settings.quote != blank %}
+              <p class="customer-quote">
+                {{ block.settings.quote }}
+              </p>
+            {% endif %}
+
+            <div class="customer-info">
+              {% if block.settings.initial != blank %}
+                <span class="customer-initial">
+                  {{ block.settings.initial }}
+                </span>
+              {% endif %}
+              
+              {% if block.settings.name != blank %}
+                <span class="customer-name">
+                  {{ block.settings.name }}
+                </span>
+              {% endif %}
+            </div>
+
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .mobile-only {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Our Customer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Athlete Endorsement Quotes From Co-Founders:"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Customer",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer Image"
+        },
+        {
+  "type": "image_picker",
+  "id": "mobile_image",
+  "label": "Mobile Image"
+},
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "initial",
+          "label": "Initial (Example: MT)"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Customer"
+    }
+  ]
+}
+{% endschema %}

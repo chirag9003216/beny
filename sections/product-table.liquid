@@ -1,0 +1,191 @@
+<section class="electrolyte-section">
+  <div class="electrolyte-container">
+
+    <h2 class="electrolyte-heading">
+      {{ section.settings.heading }}
+    </h2>
+
+    <div class="electrolyte-card">
+      
+      <div class="electrolyte-row header">
+        <h3>Electrolyte</h3>
+        <h3>Gm</h3>
+        <div></div>
+      </div>
+
+      {% for block in section.blocks %}
+        <div class="electrolyte-row">
+          <p>{{ block.settings.name }}</p>
+          <p>{{ block.settings.amount }}</p>
+          <div class="electrolyte-note">
+            <p>{{ block.settings.note }}</p>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+    .electrolyte-row p {
+    font-size: 16px;
+    color: #000;
+    max-width: 135px;
+    margin: 0 auto;
+    line-height: normal;
+}
+.electrolyte-section {
+    background: #1D1D1D;
+    padding: 60px 20px;
+    text-align: center;
+    margin-top:40px;
+}
+.electrolyte-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.electrolyte-heading {
+    color: #fff;
+    font-size: 36px;
+    margin-bottom: 40px;
+    margin-top: 0;
+}
+
+.electrolyte-card {
+  background: #f2f2f2;
+  border-radius: 16px;
+  overflow: hidden;
+  padding-bottom: 10px;
+}
+
+.electrolyte-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e0e0e0;
+  align-items: center;
+  font-size: 16px;
+}
+
+.electrolyte-row:last-child {
+  border-bottom: none;
+}
+
+.electrolyte-row.header h3 {
+    text-align: center;
+}
+
+.electrolyte-row p {
+    text-align: center;
+}
+.electrolyte-note {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+
+  .electrolyte-section {
+    padding: 40px 0;
+  }
+
+ .electrolyte-container {
+    padding: 0 0px 0 15px;
+}
+
+  .electrolyte-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .electrolyte-row {
+    min-width: 500px; 
+    grid-template-columns: 2fr 2fr 1fr;
+  }
+
+  .electrolyte-row.header h3:first-child {
+    text-align: center;
+  }
+
+  .electrolyte-row.header h3:nth-child(2) {
+    text-align: center;
+  }
+.electrolyte-row p {
+    font-size: 14px;
+}
+.electrolyte-row {
+    padding: 10px 20px;
+}
+.electrolyte-heading {
+    color: #fff;
+    font-size: 36px;
+    margin-bottom: 30px;
+    margin-top: 0;
+    padding: 0 20px;
+}
+.electrolyte-card {
+    border-radius: 16px 0 0 16px;
+}
+  .electrolyte-row p:nth-child(2) {
+    text-align: right;
+  }
+  .product__media-list {
+    gap: 15px;
+}
+
+.product__media-list li {
+    width: 85%;
+    max-width: 80% !important;
+}
+
+
+}
+</style>
+
+{% schema %}
+{
+  "name": "Electrolyte Display",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Electrolyte Display"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "electrolyte",
+      "name": "Electrolyte Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Electrolyte Name",
+          "default": "Sodium"
+        },
+        {
+          "type": "text",
+          "id": "amount",
+          "label": "Amount",
+          "default": "210mg"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Right Side Note",
+          "default": "No Artificial Added Sugar"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Table"
+    }
+  ]
+}
+{% endschema %}

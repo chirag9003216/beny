@@ -1,0 +1,133 @@
+<section class="best-value-section">
+  <div class="page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="best-value-heading">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    <div class="best-value-wrapper">
+      <div class="best-box best-box-large">
+        {% if section.settings.left_badge != blank %}
+          <span class="best-badge">
+            {{ section.settings.left_badge }}
+          </span>
+        {% endif %}
+
+        {% if section.settings.left_title != blank %}
+          <h3 class="best-title">
+            {{ section.settings.left_title }}
+          </h3>
+        {% endif %}
+
+        {% if section.blocks.size > 0 %}
+          <ul class="best-features">
+            {% for block in section.blocks %}
+              {% if block.type == 'feature' %}
+                <li>{{ block.settings.feature_text }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if section.settings.left_btn_label != blank %}
+          <a href="{{ section.settings.left_btn_link }}" class="best-btn">
+            {{ section.settings.left_btn_label }}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="best-box best-box-small">
+           {% if section.settings.left_badge != blank %}
+          <span class="best-badge">
+            {{ section.settings.left_badge }}
+          </span>
+        {% endif %}
+        {% if section.settings.right_title != blank %}
+          <h3 class="best-title">
+            {{ section.settings.right_title }}
+          </h3>
+        {% endif %}
+
+        {% if section.settings.right_btn_label != blank %}
+          <a href="{{ section.settings.right_btn_link }}" class="best-btn">
+            {{ section.settings.right_btn_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Best Value Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Best Value"
+    },
+    {
+      "type": "text",
+      "id": "left_badge",
+      "label": "Left Badge Text",
+      "default": "BEST VALUE"
+    },
+    {
+      "type": "text",
+      "id": "left_title",
+      "label": "Left Title",
+      "default": "Discovery Kit — Deluxe ($74.99)"
+    },
+    {
+      "type": "text",
+      "id": "left_btn_label",
+      "label": "Left Button Label",
+      "default": "BUY THE KIT"
+    },
+    {
+      "type": "url",
+      "id": "left_btn_link",
+      "label": "Left Button Link"
+    },
+    {
+      "type": "text",
+      "id": "right_title",
+      "label": "Right Title",
+      "default": "(Powder $49.99, Discovery $59.99) As Smaller Cards"
+    },
+    {
+      "type": "text",
+      "id": "right_btn_label",
+      "label": "Right Button Label",
+      "default": "BUY THE KIT"
+    },
+    {
+      "type": "url",
+      "id": "right_btn_link",
+      "label": "Right Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Left Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_text",
+          "label": "Feature Text",
+          "default": "1× Bulk 35 servings"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Value"
+    }
+  ]
+}
+{% endschema %}

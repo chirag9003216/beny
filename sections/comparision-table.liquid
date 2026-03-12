@@ -1,0 +1,103 @@
+<section class="pct-section">
+  <div class="page-width pct-wrapper">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="pct-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="pct-table">
+
+      <div class="pct-column pct-left">
+        <div class="pct-header">{{ section.settings.left_title }}</div>
+        {% for block in section.blocks %}
+          <div class="pct-row">{{ block.settings.feature }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="pct-column pct-center">
+        <div class="pct-header pct-highlight">
+          {{ section.settings.center_title }}
+        </div>
+        {% for block in section.blocks %}
+          <div class="pct-row pct-highlight">
+            {{ block.settings.center_value }}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="pct-column pct-right">
+        <div class="pct-header">{{ section.settings.right_title }}</div>
+        {% for block in section.blocks %}
+          <div class="pct-row">{{ block.settings.right_value }}</div>
+        {% endfor %}
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Product Comparison Table",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "BEHY Vs The Others"
+    },
+    {
+      "type": "text",
+      "id": "left_title",
+      "label": "Left Column Title",
+      "default": "Feature"
+    },
+    {
+      "type": "text",
+      "id": "center_title",
+      "label": "Center Column Title",
+      "default": "Behy"
+    },
+    {
+      "type": "text",
+      "id": "right_title",
+      "label": "Right Column Title",
+      "default": "Gatorade / Powerade"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison_row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature",
+          "label": "Feature Name",
+          "default": "Source Of Sugar"
+        },
+        {
+          "type": "text",
+          "id": "center_value",
+          "label": "Center Value",
+          "default": "100% Pure Maple Syrup"
+        },
+        {
+          "type": "text",
+          "id": "right_value",
+          "label": "Right Value",
+          "default": "Refined Sugar / Corn Syrup"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Table"
+    }
+  ]
+}
+{% endschema %}

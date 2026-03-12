@@ -1,0 +1,112 @@
+<section class="chi-section">
+  <div class="page-width chi-wrapper">
+    <div
+      class="chi-box chi-left"
+      style="background-image:url({{ section.settings.left_bg | image_url }});"
+    >
+      <div class="chi-overlay"></div>
+
+      <div class="chi-content">
+        {% if section.settings.left_heading != blank %}
+          <h2 class="chi-heading">{{ section.settings.left_heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.left_subtext != blank %}
+          <p class="chi-subtext">{{ section.settings.left_subtext }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div
+      class="chi-box chi-right"
+      style="background-image:url({{ section.settings.right_bg | image_url }});"
+    >
+      <div class="chi-overlay"></div>
+
+      <div class="chi-content">
+        <div class="chi-grid">
+          {% for block in section.blocks %}
+            <div class="chi-item">
+              {% if block.settings.icon != blank %}
+                <img
+                  class="chi-icon"
+                  src="{{ block.settings.icon | img_url: 'master' }}"
+                  alt="{{ block.settings.text }}"
+                  loading="lazy"
+                >
+              {% endif %}
+
+              <p class="chi-text">{{ block.settings.text }}</p>
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if section.settings.bottom_text != blank %}
+          <div class="chi-tagline">
+            {{ section.settings.bottom_text }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Chronic Hydration Impact",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "left_bg",
+      "label": "Left Box Background Image"
+    },
+    {
+      "type": "text",
+      "id": "left_heading",
+      "label": "Left Heading",
+      "default": "The Majority Of Canadians Are Chronically Dehydrated"
+    },
+    {
+      "type": "textarea",
+      "id": "left_subtext",
+      "label": "Left Subtext",
+      "default": "Even a mild 2% dehydration affects your concentration, your energy, and your performance."
+    },
+    {
+      "type": "image_picker",
+      "id": "right_bg",
+      "label": "Right Box Background Image"
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Bottom Tagline",
+      "default": "BEHY – Natural Hydration For The Whole Family"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "impact_item",
+      "name": "Impact Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Fatigue And Lack Of Energy"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Double Block"
+    }
+  ]
+}
+{% endschema %}

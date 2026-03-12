@@ -1,0 +1,146 @@
+<section class="bic-section"
+  style="background-image:url({{ section.settings.bg_image | image_url }});">
+
+  <div class="bic-overlay"></div>
+
+  <div class="page-width bic-wrapper">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="bic-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="bic-cards">
+
+      <div class="bic-card bic-left">
+        <div class="bic-card-header">
+          {{ section.settings.left_title }}
+        </div>
+
+        {% for block in section.blocks %}
+            {% if block.settings.electrolyte != blank %}
+          <div class="bic-row">
+            <span>{{ block.settings.electrolyte }}</span>
+          </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="bic-card bic-right">
+        <div class="bic-card-header">
+          {{ section.settings.right_title }}
+        </div>
+
+        {% for block in section.blocks %}
+             {% if block.settings.value != blank %}
+          <div class="bic-row">
+            <span>{{ block.settings.value }}</span>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    </div>
+
+    <div class="bic-features">
+      {% for block in section.blocks %}
+        {% if block.type == 'feature' %}
+          <div class="bic-feature-item">
+            {% if block.settings.icon != blank %}
+              <img src="{{ block.settings.icon | image_url }}" 
+                   alt="{{ block.settings.text }}" 
+                   loading="lazy">
+            {% endif %}
+            <span>{{ block.settings.text }}</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.bottom_text != blank %}
+      <div class="bic-bottom-text">
+        <h3>{{ section.settings.bottom_text }}</h3>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": " Ingredients Comparison",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "What’s Inside BEHY?"
+    },
+    {
+      "type": "text",
+      "id": "left_title",
+      "label": "Left Column Title",
+      "default": "Electrolyte"
+    },
+    {
+      "type": "text",
+      "id": "right_title",
+      "label": "Right Column Title",
+      "default": "BEHY (Par 500ml)"
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Bottom Text",
+      "default": "For Bottles: Calories 50 / Carbohydrates 12g / Sugar 10g (From Maple Syrup — NOT Artificial)."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Electrolyte Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "electrolyte",
+          "label": "Electrolyte Name",
+          "default": "Sodium"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "210mg"
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Bottom Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Feature Text",
+          "default": "100% Pure Maple Syrup"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Section"
+    }
+  ]
+}
+{% endschema %}

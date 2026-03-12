@@ -1,0 +1,123 @@
+<div class="icon-text-wrapper section-{{ section.id }}">
+  <div class="page-width">
+    <div class="icon-text-grid">
+
+      {% for block in section.blocks %}
+        <div class="icon-text-item">
+          
+          {% if block.settings.icon_image != blank %}
+            <div class="icon-circle">
+              <img 
+                src="{{ block.settings.icon_image | image_url: width: 80 }}" 
+                alt="{{ block.settings.text }}"
+                loading="lazy"
+              >
+            </div>
+          {% endif %}
+
+          <div class="icon-text-content">
+            {{ block.settings.text }}
+          </div>
+
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+{% style %}
+
+.section-{{ section.id }} {
+  padding: 40px 0;
+}
+
+.icon-text-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.icon-text-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+  justify-content: center;
+}
+
+.icon-circle {
+  width: 45px;
+  height: 45px;
+  background: #c8102e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.icon-text-content {
+  font-size: 16px;
+  color: #111;
+}
+
+@media (max-width: 768px) {
+  .section-{{ section.id }} {
+    padding: 0px 0 40px;
+}
+    .icon-text-grid {
+    flex-direction: column;
+    gap: 13px;
+    align-items: baseline;
+}
+  .icon-text-grid {
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  .icon-text-item {
+    justify-content: center;
+  }
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Icon With Text",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "icon_item",
+      "name": "Icon Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon Image"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>support@behy.com</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icon With Text",
+      "blocks": [
+        { "type": "icon_item" },
+        { "type": "icon_item" },
+        { "type": "icon_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

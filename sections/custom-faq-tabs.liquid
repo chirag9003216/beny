@@ -1,0 +1,290 @@
+<div class="custom-faq-section">
+  <div class="page-width">
+
+    {% if section.settings.subheading != blank %}
+      <p class="faq-subheading">{{ section.settings.subheading }}</p>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h2 class="faq-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="faq-wrapper">
+
+      <!-- LEFT TABS -->
+      <div class="faq-tabs">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab' %}
+            <div class="faq-tab {% if forloop.first %}active{% endif %}" 
+                 data-tab="tab-{{ block.id }}">
+              <span class="tab-dot"></span>
+              <h3>{{ block.settings.tab_title }}</h3>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- RIGHT CONTENT -->
+      <div class="faq-content">
+
+        {% for tab in section.blocks %}
+          {% if tab.type == 'tab' %}
+
+            <div class="faq-tab-content {% if forloop.first %}active{% endif %}" 
+                 id="tab-{{ tab.id }}">
+
+              {% for block in section.blocks %}
+
+                {% if block.settings.assign_tab == tab.settings.tab_title %}
+
+                  {% if block.type == 'heading' %}
+                    <h3 class="faq-group-heading">
+                      {{ block.settings.heading_text }}
+                    </h3>
+                  {% endif %}
+
+                  {% if block.type == 'accordion' %}
+                    <div class="faq-item">
+                      <div class="faq-question">
+                        <span>{{ block.settings.question }}</span>
+                        <span class="faq-icon">
+                          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15.8839 18.3839C15.3958 18.872 14.6042 18.872 14.1161 18.3839L7.86611 12.1339C7.37796 11.6457 7.37796 10.8543 7.86611 10.3661C8.35427 9.87796 9.14572 9.87796 9.63389 10.3661L15 15.7322L20.3661 10.3661C20.8542 9.87796 21.6458 9.87796 22.1339 10.3661C22.622 10.8543 22.622 11.6457 22.1339 12.1339L15.8839 18.3839Z" fill="#464646"/>
+                          </svg>
+                        </span>
+                      </div>
+                      <div class="faq-answer">
+                        {{ block.settings.answer }}
+                      </div>
+                    </div>
+                  {% endif %}
+
+                {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          {% endif %}
+        {% endfor %}
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  const tabs = document.querySelectorAll(".faq-tab");
+  const contents = document.querySelectorAll(".faq-tab-content");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", function() {
+      tabs.forEach(t => t.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
+
+      tab.classList.add("active");
+      document.getElementById(tab.dataset.tab).classList.add("active");
+    });
+  });
+
+  document.querySelectorAll(".faq-question").forEach(question => {
+    question.addEventListener("click", function() {
+      this.parentElement.classList.toggle("active");
+    });
+  });
+
+});
+</script>
+
+
+{% schema %}
+{
+  "name": "Advanced FAQ Tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Have A Question? Find Answers Here"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Question"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "FAQ Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Title"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Content Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_text",
+          "label": "Heading Text"
+        },
+        {
+          "type": "text",
+          "id": "assign_tab",
+          "label": "Assign To Tab (write tab title exactly)"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        },
+        {
+          "type": "text",
+          "id": "assign_tab",
+          "label": "Assign To Tab (write tab title exactly)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Advanced FAQ Tabs"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+    .faq-tab h3{
+    color:#fff;
+    margin:0;
+    }
+    p.faq-subheading {
+    text-align: center;
+    margin: 0;
+    color: #000;
+    font-size: 18px;
+}
+.custom-faq-section {
+  padding: 80px 20px;
+  background: #f4f4f4;
+}
+
+.faq-heading {
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 50px;
+    margin-top: 15px;
+}
+
+.faq-wrapper {
+  display: flex;
+  gap: 40px;
+}
+
+.faq-tabs {
+  width: 250px;
+  background: #111;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.faq-tab {
+  color: #aaa;
+  padding: 14px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.faq-question span {
+    font-size: 20px;
+}
+.faq-tab.active {
+  color: #fff;
+}
+.faq-tab h3 {
+    color: #a5a5a5;
+}
+.faq-answer {
+    font-size: 18px;
+}
+.faq-tab.active h3 {
+    color: #fff;
+}
+.tab-dot {
+  width: 10px;
+  height: 10px;
+  background: transparent;
+  border-radius: 50%;
+}
+
+.faq-tab.active .tab-dot {
+  background: #C21733;
+}
+
+.faq-content {
+  flex: 1;
+}
+
+.faq-tab-content {
+  display: none;
+}
+
+.faq-tab-content.active {
+  display: block;
+}
+
+.faq-item {
+  border-bottom: 1px solid #ddd;
+  padding: 20px 0;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.faq-answer {
+  display: none;
+  padding-top: 10px;
+  color: #555;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+.faq-item.active svg {
+  transform: rotate(180deg);
+}
+
+.faq-icon svg {
+  transition: 0.3s ease;
+}
+</style>
+

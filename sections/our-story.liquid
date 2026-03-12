@@ -1,0 +1,79 @@
+<section class="athletes-section {{ section.settings.class }}">
+  <div class="page__width">
+    {% if section.settings.heading != blank %}
+      <h2 class="athletes-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="athletes-grid">
+      {% for block in section.blocks %}
+        <div class="athlete-card">
+          {% if block.settings.image != blank %}
+            <div class="athlete-image">
+              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.name }}">
+            </div>
+          {% endif %}
+
+          <div class="athlete_content">
+            {% if block.settings.name != blank %}
+              <h3 class="athlete-name">{{ block.settings.name }}</h3>
+            {% endif %}
+
+            {% if block.settings.description != blank %}
+              <p class="athlete-desc">{{ block.settings.description }}</p>
+            {% endif %}
+          </div>
+          {% if block.settings.caption != blank %}
+            <p class="athlete_caption">
+              {{ block.settings.caption }}
+            </p>
+          {% endif %}
+          {% if block.settings.button_label != blank %}
+            <a href="{{ block.settings.button_link }}" class="athlete-btn">
+              {{ block.settings.button_label }}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="custom_dots"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Founded Athletes",
+  "settings": [
+    {
+      "type": "text",
+      "id": "class",
+      "label": "clss"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Founded By Local Athletes"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "athlete",
+      "name": "Athlete",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "textarea", "id": "caption", "label": "Text" },
+        { "type": "text", "id": "button_label", "label": "Button Label", "default": "Discover Our Story" },
+        { "type": "url", "id": "button_link", "label": "Button Link" }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Testimonial"
+    }
+  ]
+}
+{% endschema %}

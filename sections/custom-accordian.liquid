@@ -1,0 +1,294 @@
+<section class="custom-accordion-section {{ section.settings.custom_class }}">
+  <div class="page-width">
+    
+    {% if section.settings.heading != blank %}
+      <h2 class="accordion-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.enable_tabs %}
+      <div class="accordion-tabs">
+        <button class="tab-btn active" data-tab="tab1">{{ section.settings.tab_one }}</button>
+        <button class="tab-btn" data-tab="tab2">{{ section.settings.tab_two }}</button>
+      </div>
+    {% endif %}
+
+    <div class="accordion-wrapper">
+      {% for block in section.blocks %}
+        <div class="accordion-item"
+          {% if section.settings.enable_tabs %}
+          data-tab="{{ block.settings.tab_select }}"
+          {% endif %}
+        >
+          <button class="accordion-title">
+            <span class="title-text">{{ block.settings.question }}</span>
+            <span class="icon">
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M15.8839 18.3839C15.3958 18.872 14.6042 18.872 14.1161 18.3839L7.86611 12.1339C7.37796 11.6457 7.37796 10.8543 7.86611 10.3661C8.35427 9.87796 9.14572 9.87796 9.63389 10.3661L15 15.7322L20.3661 10.3661C20.8542 9.87796 21.6458 9.87796 22.1339 10.3661C22.622 10.8543 22.622 11.6457 22.1339 12.1339L15.8839 18.3839Z" fill="#464646"/>
+              </svg>
+            </span>
+          </button>
+          <div class="accordion-content">
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.button_label != blank %}
+      <div class="accordion-btn-wrap">
+        <a href="{{ section.settings.button_link }}" class="accordion-btn">
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+.custom-accordion-section {
+  padding: 60px 0;
+}
+
+
+.accordion-tabs {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.accordion-wrapper {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.accordion-tabs .tab-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 10px;
+  margin: 0 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.accordion-tabs .tab-btn {
+    position: relative;
+    color: #d9d9d9;
+}
+
+.accordion-tabs .tab-btn::before {
+    content: "";
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: #d9d9d9;
+    left: 0;
+    transform: translate(-50%, -50%);
+    top: 50%;
+}
+.accordion-tabs .tab-btn.active {
+  position:relative;
+  color:#000;
+}
+button.tab-btn.active::before {
+    content: "";
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: #C21733;
+    left: 0;
+    transform: translate(-50%, -50%);
+    top: 50%;
+}
+.accordion-item {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.accordion-title {
+  width: 100%;
+  text-align: left;
+  padding: 18px 0;
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-title .icon {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.accordion-item.active .accordion-title .icon {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  display: none;
+  padding-bottom: 15px;
+  font-size: 15px;
+}
+.accordion-heading {
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 30px;
+}
+.accordion-item.active .accordion-content {
+  display: block;
+}
+.accordion-wrapper {
+    padding-bottom: 30px;
+}
+.accordion-btn-wrap {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.accordion-btn {
+  background: #C21733;
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 25px;
+  text-decoration: none;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  const accordionTitles = document.querySelectorAll(".custom-accordion-section .accordion-title");
+  const tabs = document.querySelectorAll(".custom-accordion-section .tab-btn");
+  const items = document.querySelectorAll(".custom-accordion-section .accordion-item");
+
+  /* =========================
+     ACCORDION TOGGLE
+  ========================== */
+  accordionTitles.forEach(title => {
+    title.addEventListener("click", function() {
+      const parent = this.parentElement;
+      parent.classList.toggle("active");
+    });
+  });
+
+  /* =========================
+     TAB CLICK FUNCTION
+  ========================== */
+  function filterTab(selectedTab) {
+    items.forEach(item => {
+      if (item.getAttribute("data-tab") === selectedTab) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+        item.classList.remove("active"); // close hidden accordions
+      }
+    });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", function() {
+      tabs.forEach(btn => btn.classList.remove("active"));
+      this.classList.add("active");
+
+      const selected = this.getAttribute("data-tab");
+      filterTab(selected);
+    });
+  });
+
+  /* =========================
+     RUN DEFAULT TAB ON LOAD
+  ========================== */
+  const activeTab = document.querySelector(".custom-accordion-section .tab-btn.active");
+  if (activeTab) {
+    const defaultTab = activeTab.getAttribute("data-tab");
+    filterTab(defaultTab);
+  }
+
+});
+</script>
+
+{% schema %}
+{
+  "name": "Custom Acordian",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Question"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tabs",
+      "label": "Enable Tabs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tab_one",
+      "label": "Tab One Label",
+      "default": "Powder"
+    },
+    {
+      "type": "text",
+      "id": "tab_two",
+      "label": "Tab Two Label",
+      "default": "Drink"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "VIEW ALL"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "tab_select",
+          "label": "Select Tab",
+          "options": [
+            { "value": "tab1", "label": "Tab One" },
+            { "value": "tab2", "label": "Tab Two" }
+          ],
+          "default": "tab1"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Your question here"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Your answer here</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Custom Acordian"
+    }
+  ]
+}
+{% endschema %}

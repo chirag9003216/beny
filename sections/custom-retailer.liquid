@@ -1,0 +1,146 @@
+<div class="custom-retailer-section">
+  <div class="page-width">
+    
+    {% if section.settings.heading != blank %}
+      <h2 class="retailer-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="retailer-logos">
+      {% if section.settings.logo1 != blank %}
+        <div class="retailer-logo">
+          <img src="{{ section.settings.logo1 | img_url: 'master' }}" alt="logo">
+        </div>
+      {% endif %}
+
+      {% if section.settings.logo2 != blank %}
+        <div class="retailer-logo">
+          <img src="{{ section.settings.logo2 | img_url: 'master' }}" alt="logo">
+        </div>
+      {% endif %}
+
+      {% if section.settings.logo3 != blank %}
+        <div class="retailer-logo">
+          <img src="{{ section.settings.logo3 | img_url: 'master' }}" alt="logo">
+        </div>
+      {% endif %}
+
+      {% if section.settings.logo4 != blank %}
+        <div class="retailer-logo">
+          <img src="{{ section.settings.logo4 | img_url: 'master' }}" alt="logo">
+        </div>
+      {% endif %}
+
+      {% if section.settings.logo5 != blank %}
+        <div class="retailer-logo">
+          <img src="{{ section.settings.logo5 | img_url: 'master' }}" alt="logo">
+        </div>
+      {% endif %}
+
+      {% if section.settings.logo6 != blank %}
+        <div class="retailer-logo">
+          <img src="{{ section.settings.logo6 | img_url: 'master' }}" alt="logo">
+        </div>
+      {% endif %}
+
+      {% if section.settings.logo7 != blank %}
+        <div class="retailer-logo">
+          <img src="{{ section.settings.logo7 | img_url: 'master' }}" alt="logo">
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.settings.button_text != blank %}
+      <div class="retailer-btn-wrapper">
+        <a href="{{ section.settings.button_link }}" class="retailer-btn">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<style>
+.custom-retailer-section {
+  background-color: #C21733;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.custom-retailer-section .retailer-heading {
+    color: #fff;
+    font-size: 42px;
+    font-weight: 700;
+    padding-bottom: 50px;
+    padding-top: 0;
+    max-width: 740px;
+    margin: 0 auto;
+}
+
+.custom-retailer-section .retailer-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.custom-retailer-section .retailer-logo img {
+  max-height: 40px;
+  object-fit: contain;
+}
+
+.custom-retailer-section .retailer-btn {
+  display: inline-block;
+  background-color: #fff;
+  color: #C21733;
+  padding: 14px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.custom-retailer-section .retailer-btn:hover {
+  opacity: 0.85;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Retailer Logos Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Available At Your Nearest Stores"
+    },
+    { "type": "image_picker", "id": "logo1", "label": "Logo 1" },
+    { "type": "image_picker", "id": "logo2", "label": "Logo 2" },
+    { "type": "image_picker", "id": "logo3", "label": "Logo 3" },
+    { "type": "image_picker", "id": "logo4", "label": "Logo 4" },
+    { "type": "image_picker", "id": "logo5", "label": "Logo 5" },
+    { "type": "image_picker", "id": "logo6", "label": "Logo 6" },
+    { "type": "image_picker", "id": "logo7", "label": "Logo 7" },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "FIND A RETAILER NEAR YOU"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logos Section"
+    }
+  ]
+}
+{% endschema %}
